@@ -1,0 +1,721 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище CargoDataModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Invoice_type">
+          <Key>
+            <PropertyRef Name="id_invoice_type" />
+          </Key>
+          <Property Name="id_invoice_type" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="title" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Invoices">
+          <Key>
+            <PropertyRef Name="id_invoice" />
+          </Key>
+          <Property Name="id_invoice" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_invoice_type" Type="int" />
+          <Property Name="id_order" Type="int" />
+        </EntityType>
+        <EntityType Name="Order_product">
+          <Key>
+            <PropertyRef Name="order_id" />
+            <PropertyRef Name="product_id" />
+          </Key>
+          <Property Name="order_id" Type="int" Nullable="false" />
+          <Property Name="product_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Orders">
+          <Key>
+            <PropertyRef Name="id_order" />
+          </Key>
+          <Property Name="id_order" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_recipient" Type="int" />
+          <Property Name="sending_date" Type="date" Nullable="false" />
+          <Property Name="recevening_date" Type="date" />
+          <Property Name="price" Type="float" />
+        </EntityType>
+        <EntityType Name="Partners">
+          <Key>
+            <PropertyRef Name="id_user" />
+          </Key>
+          <Property Name="id_user" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="first_name" Type="varchar" MaxLength="60" />
+          <Property Name="second_name" Type="varchar" MaxLength="80" />
+          <Property Name="middle_name" Type="varchar" MaxLength="80" />
+          <Property Name="id_role" Type="int" />
+          <Property Name="telephone" Type="varchar" MaxLength="12" />
+          <Property Name="address" Type="varchar" MaxLength="200" />
+          <Property Name="itn" Type="varchar" MaxLength="12" />
+          <Property Name="login" Type="varchar" MaxLength="256" />
+          <Property Name="password" Type="varchar" MaxLength="256" />
+        </EntityType>
+        <EntityType Name="Product_type">
+          <Key>
+            <PropertyRef Name="id_product_type" />
+          </Key>
+          <Property Name="id_product_type" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="title" Type="varchar" MaxLength="80" />
+        </EntityType>
+        <EntityType Name="Products">
+          <Key>
+            <PropertyRef Name="id_product" />
+          </Key>
+          <Property Name="id_product" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_product_type" Type="int" />
+          <Property Name="title" Type="varchar" MaxLength="100" />
+          <Property Name="weight" Type="float" />
+          <Property Name="id_warehouse" Type="int" />
+        </EntityType>
+        <EntityType Name="Roles">
+          <Key>
+            <PropertyRef Name="id_role" />
+          </Key>
+          <Property Name="id_role" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="title" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Shipp_history">
+          <Key>
+            <PropertyRef Name="id_ship_history" />
+          </Key>
+          <Property Name="id_ship_history" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_order" Type="int" />
+          <Property Name="id_partner" Type="int" />
+          <Property Name="id_warehouse" Type="int" />
+          <Property Name="receiving_date" Type="date" />
+          <Property Name="send_date" Type="date" />
+          <Property Name="send" Type="bit" />
+        </EntityType>
+        <EntityType Name="Warehouses">
+          <Key>
+            <PropertyRef Name="id_warehouse" />
+          </Key>
+          <Property Name="id_warehouse" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="title" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <Association Name="FK_Invoices_Invoice_type">
+          <End Role="Invoice_type" Type="Self.Invoice_type" Multiplicity="0..1" />
+          <End Role="Invoices" Type="Self.Invoices" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Invoice_type">
+              <PropertyRef Name="id_invoice_type" />
+            </Principal>
+            <Dependent Role="Invoices">
+              <PropertyRef Name="id_invoice_type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Invoices_Orders">
+          <End Role="Orders" Type="Self.Orders" Multiplicity="0..1" />
+          <End Role="Invoices" Type="Self.Invoices" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="id_order" />
+            </Principal>
+            <Dependent Role="Invoices">
+              <PropertyRef Name="id_order" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_product_Orders">
+          <End Role="Orders" Type="Self.Orders" Multiplicity="1" />
+          <End Role="Order_product" Type="Self.Order_product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="id_order" />
+            </Principal>
+            <Dependent Role="Order_product">
+              <PropertyRef Name="order_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_product_Products">
+          <End Role="Products" Type="Self.Products" Multiplicity="1" />
+          <End Role="Order_product" Type="Self.Order_product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="id_product" />
+            </Principal>
+            <Dependent Role="Order_product">
+              <PropertyRef Name="product_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Orders_Partners2">
+          <End Role="Partners" Type="Self.Partners" Multiplicity="0..1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Partners">
+              <PropertyRef Name="id_user" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="id_recipient" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Partners_Roles">
+          <End Role="Roles" Type="Self.Roles" Multiplicity="0..1" />
+          <End Role="Partners" Type="Self.Partners" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="id_role" />
+            </Principal>
+            <Dependent Role="Partners">
+              <PropertyRef Name="id_role" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Products_Product_type">
+          <End Role="Product_type" Type="Self.Product_type" Multiplicity="0..1" />
+          <End Role="Products" Type="Self.Products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product_type">
+              <PropertyRef Name="id_product_type" />
+            </Principal>
+            <Dependent Role="Products">
+              <PropertyRef Name="id_product_type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Products_Warehouses">
+          <End Role="Warehouses" Type="Self.Warehouses" Multiplicity="0..1" />
+          <End Role="Products" Type="Self.Products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Warehouses">
+              <PropertyRef Name="id_warehouse" />
+            </Principal>
+            <Dependent Role="Products">
+              <PropertyRef Name="id_warehouse" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Shipp_history_Orders">
+          <End Role="Orders" Type="Self.Orders" Multiplicity="0..1" />
+          <End Role="Shipp_history" Type="Self.Shipp_history" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="id_order" />
+            </Principal>
+            <Dependent Role="Shipp_history">
+              <PropertyRef Name="id_order" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Shipp_history_Orders1">
+          <End Role="Orders" Type="Self.Orders" Multiplicity="0..1" />
+          <End Role="Shipp_history" Type="Self.Shipp_history" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="id_order" />
+            </Principal>
+            <Dependent Role="Shipp_history">
+              <PropertyRef Name="id_order" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Shipp_history_Partners">
+          <End Role="Partners" Type="Self.Partners" Multiplicity="0..1" />
+          <End Role="Shipp_history" Type="Self.Shipp_history" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Partners">
+              <PropertyRef Name="id_user" />
+            </Principal>
+            <Dependent Role="Shipp_history">
+              <PropertyRef Name="id_partner" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Shipp_history_Warehouses">
+          <End Role="Warehouses" Type="Self.Warehouses" Multiplicity="0..1" />
+          <End Role="Shipp_history" Type="Self.Shipp_history" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Warehouses">
+              <PropertyRef Name="id_warehouse" />
+            </Principal>
+            <Dependent Role="Shipp_history">
+              <PropertyRef Name="id_warehouse" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище CargoDataModelContainer">
+          <EntitySet Name="Invoice_type" EntityType="Self.Invoice_type" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Invoices" EntityType="Self.Invoices" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Order_product" EntityType="Self.Order_product" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Partners" EntityType="Self.Partners" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Product_type" EntityType="Self.Product_type" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Shipp_history" EntityType="Self.Shipp_history" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Warehouses" EntityType="Self.Warehouses" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Invoices_Invoice_type" Association="Self.FK_Invoices_Invoice_type">
+            <End Role="Invoice_type" EntitySet="Invoice_type" />
+            <End Role="Invoices" EntitySet="Invoices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Invoices_Orders" Association="Self.FK_Invoices_Orders">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="Invoices" EntitySet="Invoices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_product_Orders" Association="Self.FK_Order_product_Orders">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="Order_product" EntitySet="Order_product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_product_Products" Association="Self.FK_Order_product_Products">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="Order_product" EntitySet="Order_product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Orders_Partners2" Association="Self.FK_Orders_Partners2">
+            <End Role="Partners" EntitySet="Partners" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Partners_Roles" Association="Self.FK_Partners_Roles">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="Partners" EntitySet="Partners" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Products_Product_type" Association="Self.FK_Products_Product_type">
+            <End Role="Product_type" EntitySet="Product_type" />
+            <End Role="Products" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Products_Warehouses" Association="Self.FK_Products_Warehouses">
+            <End Role="Warehouses" EntitySet="Warehouses" />
+            <End Role="Products" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Shipp_history_Orders" Association="Self.FK_Shipp_history_Orders">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="Shipp_history" EntitySet="Shipp_history" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Shipp_history_Orders1" Association="Self.FK_Shipp_history_Orders1">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="Shipp_history" EntitySet="Shipp_history" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Shipp_history_Partners" Association="Self.FK_Shipp_history_Partners">
+            <End Role="Partners" EntitySet="Partners" />
+            <End Role="Shipp_history" EntitySet="Shipp_history" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Shipp_history_Warehouses" Association="Self.FK_Shipp_history_Warehouses">
+            <End Role="Warehouses" EntitySet="Warehouses" />
+            <End Role="Shipp_history" EntitySet="Shipp_history" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CargoDataModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Invoice_type">
+          <Key>
+            <PropertyRef Name="id_invoice_type" />
+          </Key>
+          <Property Name="id_invoice_type" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="title" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Invoices" Relationship="Self.FK_Invoices_Invoice_type" FromRole="Invoice_type" ToRole="Invoices" />
+        </EntityType>
+        <EntityType Name="Invoices">
+          <Key>
+            <PropertyRef Name="id_invoice" />
+          </Key>
+          <Property Name="id_invoice" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_invoice_type" Type="Int32" />
+          <Property Name="id_order" Type="Int32" />
+          <NavigationProperty Name="Invoice_type" Relationship="Self.FK_Invoices_Invoice_type" FromRole="Invoices" ToRole="Invoice_type" />
+          <NavigationProperty Name="Orders" Relationship="Self.FK_Invoices_Orders" FromRole="Invoices" ToRole="Orders" />
+        </EntityType>
+        <EntityType Name="Orders">
+          <Key>
+            <PropertyRef Name="id_order" />
+          </Key>
+          <Property Name="id_order" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_recipient" Type="Int32" />
+          <Property Name="sending_date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="recevening_date" Type="DateTime" Precision="0" />
+          <Property Name="price" Type="Double" />
+          <NavigationProperty Name="Invoices" Relationship="Self.FK_Invoices_Orders" FromRole="Orders" ToRole="Invoices" />
+          <NavigationProperty Name="Partners" Relationship="Self.FK_Orders_Partners2" FromRole="Orders" ToRole="Partners" />
+          <NavigationProperty Name="Shipp_history" Relationship="Self.FK_Shipp_history_Orders" FromRole="Orders" ToRole="Shipp_history" />
+          <NavigationProperty Name="Shipp_history1" Relationship="Self.FK_Shipp_history_Orders1" FromRole="Orders" ToRole="Shipp_history" />
+          <NavigationProperty Name="Products" Relationship="Self.Order_product" FromRole="Orders" ToRole="Products" />
+        </EntityType>
+        <EntityType Name="Partners">
+          <Key>
+            <PropertyRef Name="id_user" />
+          </Key>
+          <Property Name="id_user" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="first_name" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="second_name" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Name="middle_name" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Name="id_role" Type="Int32" />
+          <Property Name="telephone" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="address" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="itn" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="login" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="password" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Orders" Relationship="Self.FK_Orders_Partners2" FromRole="Partners" ToRole="Orders" />
+          <NavigationProperty Name="Roles" Relationship="Self.FK_Partners_Roles" FromRole="Partners" ToRole="Roles" />
+          <NavigationProperty Name="Shipp_history" Relationship="Self.FK_Shipp_history_Partners" FromRole="Partners" ToRole="Shipp_history" />
+        </EntityType>
+        <EntityType Name="Product_type">
+          <Key>
+            <PropertyRef Name="id_product_type" />
+          </Key>
+          <Property Name="id_product_type" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="title" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Products" Relationship="Self.FK_Products_Product_type" FromRole="Product_type" ToRole="Products" />
+        </EntityType>
+        <EntityType Name="Products">
+          <Key>
+            <PropertyRef Name="id_product" />
+          </Key>
+          <Property Name="id_product" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_product_type" Type="Int32" />
+          <Property Name="title" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="weight" Type="Double" />
+          <Property Name="id_warehouse" Type="Int32" />
+          <NavigationProperty Name="Product_type" Relationship="Self.FK_Products_Product_type" FromRole="Products" ToRole="Product_type" />
+          <NavigationProperty Name="Warehouses" Relationship="Self.FK_Products_Warehouses" FromRole="Products" ToRole="Warehouses" />
+          <NavigationProperty Name="Orders" Relationship="Self.Order_product" FromRole="Products" ToRole="Orders" />
+        </EntityType>
+        <EntityType Name="Roles">
+          <Key>
+            <PropertyRef Name="id_role" />
+          </Key>
+          <Property Name="id_role" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="title" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Partners" Relationship="Self.FK_Partners_Roles" FromRole="Roles" ToRole="Partners" />
+        </EntityType>
+        <EntityType Name="Shipp_history">
+          <Key>
+            <PropertyRef Name="id_ship_history" />
+          </Key>
+          <Property Name="id_ship_history" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_order" Type="Int32" />
+          <Property Name="id_partner" Type="Int32" />
+          <Property Name="id_warehouse" Type="Int32" />
+          <Property Name="receiving_date" Type="DateTime" Precision="0" />
+          <Property Name="send_date" Type="DateTime" Precision="0" />
+          <Property Name="send" Type="Boolean" />
+          <NavigationProperty Name="Orders" Relationship="Self.FK_Shipp_history_Orders" FromRole="Shipp_history" ToRole="Orders" />
+          <NavigationProperty Name="Orders1" Relationship="Self.FK_Shipp_history_Orders1" FromRole="Shipp_history" ToRole="Orders" />
+          <NavigationProperty Name="Partners" Relationship="Self.FK_Shipp_history_Partners" FromRole="Shipp_history" ToRole="Partners" />
+          <NavigationProperty Name="Warehouses" Relationship="Self.FK_Shipp_history_Warehouses" FromRole="Shipp_history" ToRole="Warehouses" />
+        </EntityType>
+        <EntityType Name="Warehouses">
+          <Key>
+            <PropertyRef Name="id_warehouse" />
+          </Key>
+          <Property Name="id_warehouse" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="title" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Products" Relationship="Self.FK_Products_Warehouses" FromRole="Warehouses" ToRole="Products" />
+          <NavigationProperty Name="Shipp_history" Relationship="Self.FK_Shipp_history_Warehouses" FromRole="Warehouses" ToRole="Shipp_history" />
+        </EntityType>
+        <Association Name="FK_Invoices_Invoice_type">
+          <End Role="Invoice_type" Type="Self.Invoice_type" Multiplicity="0..1" />
+          <End Role="Invoices" Type="Self.Invoices" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Invoice_type">
+              <PropertyRef Name="id_invoice_type" />
+            </Principal>
+            <Dependent Role="Invoices">
+              <PropertyRef Name="id_invoice_type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Invoices_Orders">
+          <End Role="Orders" Type="Self.Orders" Multiplicity="0..1" />
+          <End Role="Invoices" Type="Self.Invoices" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="id_order" />
+            </Principal>
+            <Dependent Role="Invoices">
+              <PropertyRef Name="id_order" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Orders_Partners2">
+          <End Role="Partners" Type="Self.Partners" Multiplicity="0..1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Partners">
+              <PropertyRef Name="id_user" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="id_recipient" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Shipp_history_Orders">
+          <End Role="Orders" Type="Self.Orders" Multiplicity="0..1" />
+          <End Role="Shipp_history" Type="Self.Shipp_history" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="id_order" />
+            </Principal>
+            <Dependent Role="Shipp_history">
+              <PropertyRef Name="id_order" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Shipp_history_Orders1">
+          <End Role="Orders" Type="Self.Orders" Multiplicity="0..1" />
+          <End Role="Shipp_history" Type="Self.Shipp_history" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="id_order" />
+            </Principal>
+            <Dependent Role="Shipp_history">
+              <PropertyRef Name="id_order" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Partners_Roles">
+          <End Role="Roles" Type="Self.Roles" Multiplicity="0..1" />
+          <End Role="Partners" Type="Self.Partners" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="id_role" />
+            </Principal>
+            <Dependent Role="Partners">
+              <PropertyRef Name="id_role" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Shipp_history_Partners">
+          <End Role="Partners" Type="Self.Partners" Multiplicity="0..1" />
+          <End Role="Shipp_history" Type="Self.Shipp_history" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Partners">
+              <PropertyRef Name="id_user" />
+            </Principal>
+            <Dependent Role="Shipp_history">
+              <PropertyRef Name="id_partner" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Products_Product_type">
+          <End Role="Product_type" Type="Self.Product_type" Multiplicity="0..1" />
+          <End Role="Products" Type="Self.Products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product_type">
+              <PropertyRef Name="id_product_type" />
+            </Principal>
+            <Dependent Role="Products">
+              <PropertyRef Name="id_product_type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Products_Warehouses">
+          <End Role="Warehouses" Type="Self.Warehouses" Multiplicity="0..1" />
+          <End Role="Products" Type="Self.Products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Warehouses">
+              <PropertyRef Name="id_warehouse" />
+            </Principal>
+            <Dependent Role="Products">
+              <PropertyRef Name="id_warehouse" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Shipp_history_Warehouses">
+          <End Role="Warehouses" Type="Self.Warehouses" Multiplicity="0..1" />
+          <End Role="Shipp_history" Type="Self.Shipp_history" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Warehouses">
+              <PropertyRef Name="id_warehouse" />
+            </Principal>
+            <Dependent Role="Shipp_history">
+              <PropertyRef Name="id_warehouse" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Order_product">
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <End Role="Products" Type="Self.Products" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="CargoDataBase" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Invoice_type" EntityType="Self.Invoice_type" />
+          <EntitySet Name="Invoices" EntityType="Self.Invoices" />
+          <EntitySet Name="Orders" EntityType="Self.Orders" />
+          <EntitySet Name="Partners" EntityType="Self.Partners" />
+          <EntitySet Name="Product_type" EntityType="Self.Product_type" />
+          <EntitySet Name="Products" EntityType="Self.Products" />
+          <EntitySet Name="Roles" EntityType="Self.Roles" />
+          <EntitySet Name="Shipp_history" EntityType="Self.Shipp_history" />
+          <EntitySet Name="Warehouses" EntityType="Self.Warehouses" />
+          <AssociationSet Name="FK_Invoices_Invoice_type" Association="Self.FK_Invoices_Invoice_type">
+            <End Role="Invoice_type" EntitySet="Invoice_type" />
+            <End Role="Invoices" EntitySet="Invoices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Invoices_Orders" Association="Self.FK_Invoices_Orders">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="Invoices" EntitySet="Invoices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Orders_Partners2" Association="Self.FK_Orders_Partners2">
+            <End Role="Partners" EntitySet="Partners" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Shipp_history_Orders" Association="Self.FK_Shipp_history_Orders">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="Shipp_history" EntitySet="Shipp_history" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Shipp_history_Orders1" Association="Self.FK_Shipp_history_Orders1">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="Shipp_history" EntitySet="Shipp_history" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Partners_Roles" Association="Self.FK_Partners_Roles">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="Partners" EntitySet="Partners" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Shipp_history_Partners" Association="Self.FK_Shipp_history_Partners">
+            <End Role="Partners" EntitySet="Partners" />
+            <End Role="Shipp_history" EntitySet="Shipp_history" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Products_Product_type" Association="Self.FK_Products_Product_type">
+            <End Role="Product_type" EntitySet="Product_type" />
+            <End Role="Products" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Products_Warehouses" Association="Self.FK_Products_Warehouses">
+            <End Role="Warehouses" EntitySet="Warehouses" />
+            <End Role="Products" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Shipp_history_Warehouses" Association="Self.FK_Shipp_history_Warehouses">
+            <End Role="Warehouses" EntitySet="Warehouses" />
+            <End Role="Shipp_history" EntitySet="Shipp_history" />
+          </AssociationSet>
+          <AssociationSet Name="Order_product" Association="Self.Order_product">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="Products" EntitySet="Products" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище CargoDataModelContainer" CdmEntityContainer="CargoDataBase">
+          <EntitySetMapping Name="Invoice_type">
+            <EntityTypeMapping TypeName="CargoDataModel.Invoice_type">
+              <MappingFragment StoreEntitySet="Invoice_type">
+                <ScalarProperty Name="id_invoice_type" ColumnName="id_invoice_type" />
+                <ScalarProperty Name="title" ColumnName="title" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Invoices">
+            <EntityTypeMapping TypeName="CargoDataModel.Invoices">
+              <MappingFragment StoreEntitySet="Invoices">
+                <ScalarProperty Name="id_invoice" ColumnName="id_invoice" />
+                <ScalarProperty Name="id_invoice_type" ColumnName="id_invoice_type" />
+                <ScalarProperty Name="id_order" ColumnName="id_order" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Orders">
+            <EntityTypeMapping TypeName="CargoDataModel.Orders">
+              <MappingFragment StoreEntitySet="Orders">
+                <ScalarProperty Name="id_order" ColumnName="id_order" />
+                <ScalarProperty Name="id_recipient" ColumnName="id_recipient" />
+                <ScalarProperty Name="sending_date" ColumnName="sending_date" />
+                <ScalarProperty Name="recevening_date" ColumnName="recevening_date" />
+                <ScalarProperty Name="price" ColumnName="price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Partners">
+            <EntityTypeMapping TypeName="CargoDataModel.Partners">
+              <MappingFragment StoreEntitySet="Partners">
+                <ScalarProperty Name="id_user" ColumnName="id_user" />
+                <ScalarProperty Name="first_name" ColumnName="first_name" />
+                <ScalarProperty Name="second_name" ColumnName="second_name" />
+                <ScalarProperty Name="middle_name" ColumnName="middle_name" />
+                <ScalarProperty Name="id_role" ColumnName="id_role" />
+                <ScalarProperty Name="telephone" ColumnName="telephone" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="itn" ColumnName="itn" />
+                <ScalarProperty Name="login" ColumnName="login" />
+                <ScalarProperty Name="password" ColumnName="password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Product_type">
+            <EntityTypeMapping TypeName="CargoDataModel.Product_type">
+              <MappingFragment StoreEntitySet="Product_type">
+                <ScalarProperty Name="id_product_type" ColumnName="id_product_type" />
+                <ScalarProperty Name="title" ColumnName="title" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Products">
+            <EntityTypeMapping TypeName="CargoDataModel.Products">
+              <MappingFragment StoreEntitySet="Products">
+                <ScalarProperty Name="id_product" ColumnName="id_product" />
+                <ScalarProperty Name="id_product_type" ColumnName="id_product_type" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="weight" ColumnName="weight" />
+                <ScalarProperty Name="id_warehouse" ColumnName="id_warehouse" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="CargoDataModel.Roles">
+              <MappingFragment StoreEntitySet="Roles">
+                <ScalarProperty Name="id_role" ColumnName="id_role" />
+                <ScalarProperty Name="title" ColumnName="title" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Shipp_history">
+            <EntityTypeMapping TypeName="CargoDataModel.Shipp_history">
+              <MappingFragment StoreEntitySet="Shipp_history">
+                <ScalarProperty Name="id_ship_history" ColumnName="id_ship_history" />
+                <ScalarProperty Name="id_order" ColumnName="id_order" />
+                <ScalarProperty Name="id_partner" ColumnName="id_partner" />
+                <ScalarProperty Name="id_warehouse" ColumnName="id_warehouse" />
+                <ScalarProperty Name="receiving_date" ColumnName="receiving_date" />
+                <ScalarProperty Name="send_date" ColumnName="send_date" />
+                <ScalarProperty Name="send" ColumnName="send" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Warehouses">
+            <EntityTypeMapping TypeName="CargoDataModel.Warehouses">
+              <MappingFragment StoreEntitySet="Warehouses">
+                <ScalarProperty Name="id_warehouse" ColumnName="id_warehouse" />
+                <ScalarProperty Name="title" ColumnName="title" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="Order_product" TypeName="CargoDataModel.Order_product" StoreEntitySet="Order_product">
+            <EndProperty Name="Orders">
+              <ScalarProperty Name="id_order" ColumnName="order_id" />
+            </EndProperty>
+            <EndProperty Name="Products">
+              <ScalarProperty Name="id_product" ColumnName="product_id" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

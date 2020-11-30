@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="b261b4a33cf542f7885aff96ea32637f" Name="Diagram1">
+        <EntityTypeShape EntityType="Cargo_databaseModel.Invoice_type" Width="1.5" PointX="5.25" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Cargo_databaseModel.Invoices" Width="1.5" PointX="7.5" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Cargo_databaseModel.Orders" Width="1.5" PointX="5.25" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Cargo_databaseModel.Partners" Width="1.5" PointX="3" PointY="7.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Cargo_databaseModel.Product_type" Width="1.5" PointX="0.75" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Cargo_databaseModel.Products" Width="1.5" PointX="3" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Cargo_databaseModel.Roles" Width="1.5" PointX="0.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Cargo_databaseModel.Shipp_history" Width="1.5" PointX="10.5" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="Cargo_databaseModel.Warehouses" Width="1.5" PointX="0.75" PointY="4.625" IsExpanded="true" />
+        <AssociationConnector Association="Cargo_databaseModel.FK_Invoices_Invoice_type" ManuallyRouted="false" />
+        <AssociationConnector Association="Cargo_databaseModel.FK_Invoices_Orders" ManuallyRouted="false" />
+        <AssociationConnector Association="Cargo_databaseModel.FK_Orders_Partners" ManuallyRouted="false" />
+        <AssociationConnector Association="Cargo_databaseModel.FK_Orders_Partners1" ManuallyRouted="false" />
+        <AssociationConnector Association="Cargo_databaseModel.FK_Orders_Partners2" ManuallyRouted="false" />
+        <AssociationConnector Association="Cargo_databaseModel.FK_Shipp_history_Orders" ManuallyRouted="false" />
+        <AssociationConnector Association="Cargo_databaseModel.FK_Shipp_history_Orders1" ManuallyRouted="false" />
+        <AssociationConnector Association="Cargo_databaseModel.FK_Partners_Roles" ManuallyRouted="false" />
+        <AssociationConnector Association="Cargo_databaseModel.FK_Shipp_history_Partners" ManuallyRouted="false" />
+        <AssociationConnector Association="Cargo_databaseModel.FK_Products_Product_type" ManuallyRouted="false" />
+        <AssociationConnector Association="Cargo_databaseModel.FK_Products_Warehouses" ManuallyRouted="false" />
+        <AssociationConnector Association="Cargo_databaseModel.FK_Shipp_history_Warehouses" ManuallyRouted="false" />
+        <AssociationConnector Association="Cargo_databaseModel.OrdersProducts" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
