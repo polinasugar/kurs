@@ -51,13 +51,13 @@ namespace kursovay.Controllers
         {
             if (userSerivice.CheckLoginAndPassword(loginAndPassword))
             {
-                //После поменять
-                return View();
+                Session["session"] = userSerivice.GetUserIdByLogin(loginAndPassword.Login);
+                return RedirectToAction("ProductList", "Product");
             }
             else
             {
                 //После поменять
-                return View("a");
+                return View();
             }
         }
     }

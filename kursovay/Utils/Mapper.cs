@@ -38,7 +38,7 @@ namespace kursovay.Utils
             return productDto;
         }
 
-        public List<Products> MapProductDtoToList(List<ProductDto> productDtos)
+        public List<Products> MapProductDtoToList(IEnumerable<ProductDto> productDtos)
         {
             List<Products> products = new List<Products>();
             foreach(ProductDto productDto in productDtos)

@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<kursovay.DTO.ProductDto>
 
 @{
-    ViewBag.Title = "ProductList";
+    ViewBag.Title = "Продукция";
     int userId = (int)Session["user"];
 }
 
@@ -10,6 +10,8 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
+@using (Html.BeginForm(new { userId = userId }))
+{
 <table class="table">
     <tr>
         <th>
@@ -27,27 +29,26 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Weight)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ProductType)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.WarehouseTitle)
-        </td>
-        <td>
-            @Html.RadioButton("Buy", item.Buy)
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Weight)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.WarehouseTitle)
+            </td>
+            <td>
+                @Html.CheckBoxFor(modelItem => item.Buy)
+            </td>
+        </tr>
+    }
 </table>
-@using (Html.BeginForm(new { userId = userId }))
-{
-    <input type="submit" value="Make order" />
+<input type="submit" value="Make order" />
 }

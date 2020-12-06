@@ -26,7 +26,7 @@ namespace kursovay.Services
             return productDtos;
         } 
 
-        public void MakeOrder(List<ProductDto> dtos, int userId)
+        public void MakeOrder(IEnumerable<ProductDto> dtos, int userId)
         {
             List<Products> products = mapper.MapProductDtoToList(dtos);
             productManager.AddOrder(products, userId);

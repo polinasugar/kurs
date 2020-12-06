@@ -18,10 +18,10 @@ namespace kursovay.Controllers
         }
 
         [HttpPost]
-        public ActionResult ProductList(List<ProductDto> productDtos, int userId)
+        public ActionResult ProductList(IEnumerable<ProductDto> productDtos, int userId)
         {
             productService.MakeOrder(productDtos, userId);
-            return View();
+            return RedirectToAction("ProductList");
         }
     }
 }
