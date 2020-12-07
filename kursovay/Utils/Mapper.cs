@@ -13,12 +13,13 @@ namespace kursovay.Utils
         private CargoDataBase db = new CargoDataBase();
         public Partners RegistrationDTOToPartner(RegistrationDTO newPartner)
         {
+            Roles role = db.Roles.Where(r => r.title == newPartner.Type.ToString()).First();
             Partners partner = new Partners();
             partner.first_name = newPartner.FirstName;
             partner.second_name = newPartner.SecondName;
             partner.middle_name = newPartner.MiddleName;
             partner.address = newPartner.Address;
-            partner.id_role = 1;
+            partner.id_role = role.id_role;
             partner.login = newPartner.LoginAndPassword.Login;
             partner.password = Cryptographer.Hash(newPartner.LoginAndPassword.Password);
             partner.itn = newPartner.ITN;

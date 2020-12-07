@@ -10,7 +10,7 @@ namespace kursovay.DTO
         public string FirstName { get; set; }
         public string SecondName { get; set; }
         public string MiddleName { get; set; }
-        public int Role { get; set; }
+        public RoleTypes Type { get; set; }
         public string Address { get; set; }
         public string Telephone { get; set; }
         public string ITN { get; set; }
