@@ -21,7 +21,7 @@ namespace kursovay.Utils
             partner.address = newPartner.Address;
             partner.id_role = role.id_role;
             partner.login = newPartner.LoginAndPassword.Login;
-            partner.password = Cryptographer.Hash(newPartner.LoginAndPassword.Password);
+            partner.password = newPartner.LoginAndPassword.Password;
             partner.itn = newPartner.ITN;
             partner.telephone = newPartner.Telephone;
             return partner;
@@ -31,6 +31,7 @@ namespace kursovay.Utils
         {
             ProductDto productDto = new ProductDto()
             {
+                Id = product.id_product,
                 Title = product.title,
                 Weight = product.weight,
                 ProductType = product.Product_type.title,

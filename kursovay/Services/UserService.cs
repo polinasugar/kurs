@@ -15,6 +15,7 @@ namespace kursovay.Services
         private PartnersDAO partnersDAO = new PartnersDAO();
         private RolesDAO rolesDAO = new RolesDAO();
         private Mapper mapper = new Mapper();
+        private UserMapper userMapper = new UserMapper();
         private ProductManager productManager = new ProductManager();
         public void AddPartner(RegistrationDTO registrationDTO)
         {
@@ -23,9 +24,16 @@ namespace kursovay.Services
         }
 
         //Для авторизации
-        public bool CheckLoginAndPassword(LoginAndPasswordDTO loginAndPassword)
+        public bool CheckLoginAndPassword(string login, string password)
         {
-            return partnersDAO.CheckLoginAndPassword(loginAndPassword.Login, loginAndPassword.Password);
+            return partnersDAO.CheckLoginAndPassword(login, password);
+        }
+
+        public PartnerDto LogIn(string login)
+        {
+            Partners partner = partnersDAO.GetByLogin(login);
+            PartnerDto partnerDto = userMapper.GetPartnerDto(partner);
+            return partnerDto;
         }
 
         public List<Roles> GetAllRoles()
@@ -36,12 +44,6 @@ namespace kursovay.Services
         public int GetUserIdByLogin(string login)
         {
             return partnersDAO.GetByLogin(login).id_user;
-        }
-
-        public void MakeOrder(List<ProductDto> productDtos, int partnerId)
-        {
-            List<Products> products = mapper.MapProductDtoToList(productDtos);
-            productManager.AddOrder(products, partnerId);
         }
     }
 }

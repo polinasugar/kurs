@@ -20,16 +20,19 @@ namespace kursovay.DAO
         //Для авторризации
         public bool CheckLoginAndPassword(string login, string password)
         {
-            string hashedPassword = Cryptographer.Hash(password);
-            if(db.Partners.Select(p => p.login).Contains(login))
+            try
             {
-                string partnerPassword = db.Partners.Where(p => p.login == login).Select(p => p.password).First();
-                if(partnerPassword == hashedPassword)
+                Partners partner = GetByLogin(login);
+                if(partner.login == login && partner.password == password)
                 {
                     return true;
                 }
+                return false;
             }
-            return false;
+            catch
+            {
+                return false;
+            }
         }
 
         public Partners GetByLogin(string login)

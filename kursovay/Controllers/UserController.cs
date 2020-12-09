@@ -43,21 +43,27 @@ namespace kursovay.Controllers
         //Для авторизации
         public ActionResult LoginForm()
         {
+            ViewData["test"] = "test";
             return View();
         }
 
-        [HttpPost]
-        public ActionResult LoginForm(LoginAndPasswordDTO loginAndPassword)
+        public ActionResult PrivatePage(string login)
         {
-            if (userSerivice.CheckLoginAndPassword(loginAndPassword))
+            PartnerDto partnerDto = userSerivice.LogIn(login);
+            return View(partnerDto);
+        }
+
+        public ActionResult LogIn(string login, string password)
+        {
+            if (userSerivice.CheckLoginAndPassword(login, password))
             {
-                Session["session"] = userSerivice.GetUserIdByLogin(loginAndPassword.Login);
-                return RedirectToAction("ProductList", "Product");
+                Session["session"] = userSerivice.LogIn(login);
+                return RedirectToAction("PrivatePage", new { login = login });
             }
             else
             {
                 //После поменять
-                return View();
+                return View("LoginForm");
             }
         }
     }

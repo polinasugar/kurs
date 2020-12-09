@@ -135,6 +135,7 @@
     <Compile Include="DAO\RolesDAO.cs" />
     <Compile Include="DTO\LoginAndPasswordDTO.cs" />
     <Compile Include="DTO\OrderDTO.cs" />
+    <Compile Include="DTO\PartnerDto.cs" />
     <Compile Include="DTO\ProductDto.cs" />
     <Compile Include="DTO\RegistrationDTO.cs" />
     <Compile Include="DTO\RoleTypes.cs" />
@@ -203,6 +204,7 @@
     <Compile Include="Services\UserService.cs" />
     <Compile Include="Utils\Cryptographer.cs" />
     <Compile Include="Utils\Mapper.cs" />
+    <Compile Include="Utils\UserMapper.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
@@ -274,6 +276,7 @@
     <Content Include="Views\User\RegistrationForm.cshtml" />
     <Content Include="Views\User\LoginForm.cshtml" />
     <Content Include="Views\Product\ProductList.cshtml" />
+    <Content Include="Views\User\PrivatePage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -18,30 +18,33 @@ namespace kursovay.DAO
             return products;
         }
 
-        public void AddOrder(List<Products> products, int partnerId)
+
+        public Products GetProductById(int id)
+        {
+            return db.Products.Where(p => p.id_product == id).First();
+        }
+
+        public Orders AddOrder(int userId, int itemsCount)
         {
             using(DbContextTransaction transaction = db.Database.BeginTransaction())
             {
                 try
                 {
-                    Partners partner = db.Partners.Where(p => p.id_user == partnerId).First();
                     Orders order = new Orders();
-                    order.id_recipient = partnerId;
+                    order.id_recipient = 24;
+                    order.sending_date = DateTime.Now;
+                    DateTime receivDay = DateTime.Now.AddDays(10);
+                    order.recevening_date = receivDay;
+                    order.price = itemsCount * 100;
                     order = db.Orders.Add(order);
                     db.SaveChanges();
-                    foreach(Products product in products)
-                    {
-                        order.Products.Add(product);
-                    }
-                    db.SaveChanges();
-                    partner.Orders.Add(order);
-                    db.SaveChanges();
                     transaction.Commit();
+                    return order;
                 }
                 catch
                 {
-                    transaction.Rollback();
-                    throw;
+                   transaction.Rollback();
+                   throw;
                 }
             }
         }

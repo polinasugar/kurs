@@ -1,8 +1,9 @@
 ﻿@model IEnumerable<kursovay.DTO.ProductDto>
+@using kursovay.DTO;
 
 @{
     ViewBag.Title = "Продукция";
-    int userId = (int)Session["user"];
+    PartnerDto currentUser = (PartnerDto)Session["session"];
 }
 
 <h2>ProductList</h2>
@@ -10,8 +11,6 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-@using (Html.BeginForm(new { userId = userId }))
-{
 <table class="table">
     <tr>
         <th>
@@ -31,24 +30,39 @@
 
     @foreach (var item in Model)
     {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Weight)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProductType)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.WarehouseTitle)
-            </td>
-            <td>
-                @Html.CheckBoxFor(modelItem => item.Buy)
-            </td>
-        </tr>
+     
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Weight)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProductType)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.WarehouseTitle)
+                </td>
+                <td>
+                    @using (Html.BeginForm("AddItemInOrder", "Product", new { itemId = item.Id }))
+                    {
+                        if (currentUser.ItemsId.Contains(item.Id))
+                        {
+                            <label>Item already is in your order</label>
+                        }
+                        else
+                        {
+                            <input type="submit" value="Add in order" />
+                        }
+                    }
+                </td>
+            </tr>
     }
-</table>
-<input type="submit" value="Make order" />
-}
+    </table>
+<div>
+    @using (Html.BeginForm("MakeOrder","Product", FormMethod.Post, new { partnerDto = currentUser}))
+    {
+        <input type="submit" value="Make order"/>
+    }
+</div>

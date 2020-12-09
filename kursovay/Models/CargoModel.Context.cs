@@ -22,7 +22,15 @@ namespace kursovay.Models
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Orders>().HasMany(o => o.Products).WithMany(p => p.Orders).Map(m => m.MapLeftKey("order_id").MapRightKey("poduct_id").ToTable("Order_product"));
+            modelBuilder.Entity<Orders>()
+                .HasMany(o => o.Products)
+                .WithMany(p => p.Orders)
+                .Map(po =>
+                {
+                    po.ToTable("Order_product");
+                    po.MapLeftKey("product_id");
+                    po.MapRightKey("order_id");
+                });
         }
     
         public virtual DbSet<Invoice_type> Invoice_type { get; set; }
