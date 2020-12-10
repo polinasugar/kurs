@@ -128,11 +128,14 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="DAO\OrderManager.cs" />
     <Compile Include="DAO\PartnersDAO.cs" />
     <Compile Include="DAO\ProductManager.cs" />
     <Compile Include="DAO\RolesDAO.cs" />
+    <Compile Include="DAO\ShippHistoryManager.cs" />
     <Compile Include="DTO\LoginAndPasswordDTO.cs" />
     <Compile Include="DTO\OrderDTO.cs" />
     <Compile Include="DTO\PartnerDto.cs" />
@@ -204,6 +207,7 @@
     <Compile Include="Services\UserService.cs" />
     <Compile Include="Utils\Cryptographer.cs" />
     <Compile Include="Utils\Mapper.cs" />
+    <Compile Include="Utils\OrderMapper.cs" />
     <Compile Include="Utils\UserMapper.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -277,6 +281,7 @@
     <Content Include="Views\User\LoginForm.cshtml" />
     <Content Include="Views\Product\ProductList.cshtml" />
     <Content Include="Views\User\PrivatePage.cshtml" />
+    <Content Include="Views\Order\OrdersList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

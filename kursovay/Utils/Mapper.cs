@@ -27,6 +27,32 @@ namespace kursovay.Utils
             return partner;
         }
 
+        public OrderDto GetOrderDto(Orders order)
+        {
+            OrderDto orderDto = new OrderDto()
+            {
+                OrderId = order.id_order,
+                ReceivingDate = order.recevening_date,
+                SendingDate = order.sending_date
+            };
+            Shipp_history history = db.Shipp_history.Where(sh => sh.id_order == order.id_order && sh.send == false).First();
+            Warehouses warehouse = db.Warehouses.Where(w => w.id_warehouse == history.id_warehouse).First();
+            orderDto.CurrentWarehouseTitle = warehouse.title;
+            foreach(Products product in order.Products)
+            {
+                ProductDto productDto = ProductToProductDto(product);
+                orderDto.Products.Add(productDto);
+            }
+            return orderDto;
+        }
+
+        public List<OrderDto> GetOrdersDto(List<Orders> orders)
+        {
+            List<OrderDto> ordersDto = new List<OrderDto>();
+            orders.ForEach(o => ordersDto.Add(GetOrderDto(o)));
+            return ordersDto;
+        }
+
         public ProductDto ProductToProductDto(Products product)
         {
             ProductDto productDto = new ProductDto()

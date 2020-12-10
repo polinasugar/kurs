@@ -1,0 +1,54 @@
+﻿@model IEnumerable<kursovay.DTO.OrderDto>
+@using kursovay.DTO
+@{
+    ViewBag.Title = "Orders List";
+}
+
+<h2>OrdersList</h2>
+
+<div>
+    @foreach(OrderDto item in Model)
+    {
+        <table class="table">
+            <tr>
+                <th>
+                    <label>ID заказа</label>
+                </th>
+                <th>
+                    <label>Дата отправки</label>
+                </th>
+                <th>
+                    <label>Дата получения</label>
+                </th>
+                <th>
+                    <label>Назвние текущего склада</label>
+                </th>
+                <th>
+                    <label>Список продуктов</label>
+                </th>
+            </tr>
+            <tr>
+                <td>
+                    @item.OrderId
+                </td>
+                <td>
+                    @item.ReceivingDate
+                </td>
+                <td>
+                    @item.SendingDate
+                </td>
+                <td>
+                    @item.CurrentWarehouseTitle
+                </td>
+                <td>
+                    <ul>
+                        @foreach(ProductDto product in item.Products)
+                        {
+                            <li>@product.Title</li>
+                        }
+                    </ul>
+                </td>
+            </tr>
+        </table>
+    }
+</div>

@@ -1,7 +1,9 @@
 ﻿@model kursovay.DTO.PartnerDto
+@using kursovay.DTO
 
 @{
     ViewBag.Title = "PrivatePage";
+    PartnerDto partnerDto = (PartnerDto)Session["session"];
 }
 
 <h2>PrivatePage</h2>
@@ -54,5 +56,8 @@
 </div>
 <p>
     @Html.ActionLink("To product list", "ProductList", "Product", null, null);
+</p>
+<p>
+    @Html.ActionLink("Orders list", "OrdersList", "Order", new { userId = partnerDto.Id }, null)
 </p>
 @Model.Id

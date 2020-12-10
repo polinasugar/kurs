@@ -5,10 +5,19 @@ using System.Web;
 
 namespace kursovay.DTO
 {
-    public class OrderDTO
+    public class OrderDto
     {
-        public int ClientId { get; set; }
+        public int OrderId { get; set; }
+        public DateTime? SendingDate { get; set; }
+        public DateTime? ReceivingDate { get; set; }
 
-        public IEnumerable<ProductDto> ProductDtos { get; set; }
+        public string CurrentWarehouseTitle { get; set; }
+
+        public List<ProductDto> Products { get; set; }
+
+        public OrderDto()
+        {
+            Products = new List<ProductDto>();
+        }
     }
 }

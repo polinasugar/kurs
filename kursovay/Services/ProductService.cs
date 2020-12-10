@@ -15,7 +15,9 @@ namespace kursovay.Services
     {
         private ProductManager productManager = new ProductManager();
         private Mapper mapper = new Mapper();
+        private OrderManager orderManager = new OrderManager();
         private CargoDataBase db = new CargoDataBase();
+        private ShippHistoryManager shipHistoryManager = new ShippHistoryManager();
         public List<ProductDto> GetAllProductsInDto()
         {
             List<ProductDto> productDtos = new List<ProductDto>();
@@ -49,6 +51,9 @@ namespace kursovay.Services
                         order.Products.Add(product);
                     }
                     db.SaveChanges();
+                    Shipp_history history = shipHistoryManager.AddShippingHistory(order);
+                    db.Shipp_history.Add(history);
+                    db.SaveChanges();
                     transaction.Commit();
                     partnerDto.ItemsId.Clear();
                 }
@@ -58,6 +63,13 @@ namespace kursovay.Services
                     throw;
                 }
             }
+        }
+
+        public List<OrderDto> GerOrders(int userId)
+        {
+            List<Orders> orders = orderManager.GetOrdersOfUser(userId);
+            List<OrderDto> ordersDto = mapper.GetOrdersDto(orders);
+            return ordersDto;
         }
     }
 }
