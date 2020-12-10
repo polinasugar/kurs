@@ -4,6 +4,7 @@
 @{
     ViewBag.Title = "Продукция";
     PartnerDto currentUser = (PartnerDto)Session["session"];
+    string login = Session["login"].ToString();
 }
 
 <h2>ProductList</h2>
@@ -65,4 +66,7 @@
     {
         <input type="submit" value="Make order"/>
     }
+</div>
+<div>
+    @Html.ActionLink("My page", "PrivatePage", "User", new { login = login}, null)
 </div>

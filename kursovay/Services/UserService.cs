@@ -22,6 +22,11 @@ namespace kursovay.Services
             Partners partner = mapper.RegistrationDTOToPartner(registrationDTO);
             partnersDAO.AddNewPartner(partner);
         }
+        
+        public string GetLogin(int id)
+        {
+            return partnersDAO.GetLoginById(id);
+        }
 
         //Для авторизации
         public bool CheckLoginAndPassword(string login, string password)

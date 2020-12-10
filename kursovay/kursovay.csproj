@@ -282,6 +282,7 @@
     <Content Include="Views\Product\ProductList.cshtml" />
     <Content Include="Views\User\PrivatePage.cshtml" />
     <Content Include="Views\Order\OrdersList.cshtml" />
+    <Content Include="Views\Order\List.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

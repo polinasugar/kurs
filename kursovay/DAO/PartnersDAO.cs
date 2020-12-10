@@ -39,5 +39,10 @@ namespace kursovay.DAO
         {
             return db.Partners.Where(p => p.login == login).First();
         }
+
+        public string GetLoginById(int id)
+        {
+            return db.Partners.Where(u => u.id_user == id).First().login;
+        }
     }
 }

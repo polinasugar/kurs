@@ -37,7 +37,8 @@ namespace kursovay.Controllers
         {
             userSerivice.AddPartner(newUser);
             Session["user"] = userSerivice.GetUserIdByLogin(newUser.LoginAndPassword.Login);
-            return RedirectToAction("ProductList", "Product");
+            Session["login"] = newUser.LoginAndPassword.Login;
+            return RedirectToAction("PrivatePage", "User", new { login = newUser.LoginAndPassword.Login });
         }
 
         //Для авторизации
@@ -58,6 +59,7 @@ namespace kursovay.Controllers
             if (userSerivice.CheckLoginAndPassword(login, password))
             {
                 Session["session"] = userSerivice.LogIn(login);
+                Session["login"] = login;
                 return RedirectToAction("PrivatePage", new { login = login });
             }
             else

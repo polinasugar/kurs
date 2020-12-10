@@ -2,6 +2,8 @@
 @using kursovay.DTO
 @{
     ViewBag.Title = "Orders List";
+    PartnerDto partner = (PartnerDto)Session["session"];
+        string login = Session["login"].ToString();
 }
 
 <h2>OrdersList</h2>
@@ -48,7 +50,26 @@
                         }
                     </ul>
                 </td>
+                <td>
+                    @if (partner.Role == RoleTypes.Supplier)
+                    {
+                        using (Html.BeginForm("AcceptOrder", "Order", new { orderId = item.OrderId }))
+                        {
+                            <input type="submit" value="Товар получен" />
+                        }
+                    }
+                </td>
+                <td>
+                    @if (partner.Role == RoleTypes.Wholesaler)
+                    {
+                        Html.RenderAction("List", new { orderId = item.OrderId, userId = partner.Id });
+                    }
+
+                </td>
             </tr>
         </table>
     }
+</div>
+<div>
+    @Html.ActionLink("My page", "PrivatePage", "User", new { login = login }, null)
 </div>

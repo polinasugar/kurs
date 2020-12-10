@@ -1,0 +1,12 @@
+﻿@using kursovay.DTO;
+@{ 
+    SelectList selectList = (SelectList)ViewData["list"];
+    int orderId = (int)ViewData["orderId"];
+    PartnerDto partner = (PartnerDto)Session["session"];
+}
+
+@using (Html.BeginForm("MoveOrder", "Order", new { orderId = orderId, userId = partner.Id }))
+{
+    @Html.DropDownList("newWarehouseId", selectList)
+    <input type="submit" value="Move order"/>
+}

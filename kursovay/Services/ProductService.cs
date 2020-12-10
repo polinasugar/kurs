@@ -65,11 +65,26 @@ namespace kursovay.Services
             }
         }
 
+        public void MoveOrder(int orderId, int newWarehouseId)
+        {
+            orderManager.MoveOrder(orderId, newWarehouseId);
+        }
+
         public List<OrderDto> GerOrders(int userId)
         {
             List<Orders> orders = orderManager.GetOrdersOfUser(userId);
             List<OrderDto> ordersDto = mapper.GetOrdersDto(orders);
             return ordersDto;
+        }
+
+        public void AcceptOrder(int itemId)
+        {
+            orderManager.DeleteOrder(itemId);
+        }
+
+        public List<Warehouses> GetWarehouses(int orderId)
+        {
+            return orderManager.GetWarehousesOfOrder(orderId);
         }
     }
 }
