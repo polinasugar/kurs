@@ -2,16 +2,13 @@
 @using kursovay.DTO;
 
 @{
-    ViewBag.Title = "Продукция";
+    ViewBag.Title = "ProductList";
     PartnerDto currentUser = (PartnerDto)Session["session"];
     string login = Session["login"].ToString();
 }
 
-<h2>ProductList</h2>
+<h2>Каталог товаров</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 <table class="table">
     <tr>
         <th>
@@ -50,11 +47,11 @@
                     {
                         if (currentUser.ItemsId.Contains(item.Id))
                         {
-                            <label>Item already is in your order</label>
+                            <label>Продукт уже добавлен</label>
                         }
                         else
                         {
-                            <input type="submit" value="Add in order" />
+                            <input type="submit" value="Добавить продукт в заказ" />
                         }
                     }
                 </td>
@@ -64,9 +61,9 @@
 <div>
     @using (Html.BeginForm("MakeOrder","Product", FormMethod.Post, new { partnerDto = currentUser}))
     {
-        <input type="submit" value="Make order"/>
+        <input type="submit" value="Сделать заказ"/>
     }
 </div>
 <div>
-    @Html.ActionLink("My page", "PrivatePage", "User", new { login = login}, null)
+    @Html.ActionLink("Личная страница", "PrivatePage", "User", new { login = login}, null)
 </div>

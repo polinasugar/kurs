@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = "LoginForm";
 }
-<h2>Вход</h2>
+<h2>Вход в систему</h2>
 
 
 @using (Html.BeginForm("LogIn", "User")) 
@@ -11,7 +11,7 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>LoginAndPasswordDTO</h4>
+        <h4></h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">

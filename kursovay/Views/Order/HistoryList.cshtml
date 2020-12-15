@@ -1,0 +1,48 @@
+﻿@model IEnumerable<kursovay.DTO.ShippHistoryDto>
+
+
+<h2>История транспортировки заказа</h2>
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.Label("Название склада")
+        </th>
+        <th>
+            @Html.Label("Дата прибытия на склад")
+        </th>
+        <th>
+            @Html.Label("Дата отправки со склада")
+        </th>
+        <th>
+            @Html.Label("Уже отправлен?")
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.WarehouseTitle)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ReceivingDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SendingDate)
+        </td>
+        <td>
+            @if ((bool)item.Send)
+            {
+                <label>Да</label>
+            }
+            else
+            {
+                <label>Нет</label>
+            }
+        </td>
+    </tr>
+}
+
+</table>

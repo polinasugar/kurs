@@ -21,7 +21,10 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                   
+                   @if (Session["session"] != null)
+                   {
+                       @Html.ActionLink("Выйти", "LogOut", "User", null, null);
+                   }
                 </ul>
             </div>
         </div>

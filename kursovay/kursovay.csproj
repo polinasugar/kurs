@@ -142,6 +142,7 @@
     <Compile Include="DTO\ProductDto.cs" />
     <Compile Include="DTO\RegistrationDTO.cs" />
     <Compile Include="DTO\RoleTypes.cs" />
+    <Compile Include="DTO\ShippHistoryDto.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -207,7 +208,7 @@
     <Compile Include="Services\UserService.cs" />
     <Compile Include="Utils\Cryptographer.cs" />
     <Compile Include="Utils\Mapper.cs" />
-    <Compile Include="Utils\OrderMapper.cs" />
+    <Compile Include="Utils\HistoryMapper.cs" />
     <Compile Include="Utils\UserMapper.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -283,6 +284,7 @@
     <Content Include="Views\User\PrivatePage.cshtml" />
     <Content Include="Views\Order\OrdersList.cshtml" />
     <Content Include="Views\Order\List.cshtml" />
+    <Content Include="Views\Order\HistoryList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

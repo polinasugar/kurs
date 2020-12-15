@@ -2,14 +2,12 @@
 @using kursovay.DTO
 
 @{
-    ViewBag.Title = "PrivatePage";
     PartnerDto partnerDto = (PartnerDto)Session["session"];
 }
 
-<h2>PrivatePage</h2>
+<h2>Личная страница</h2>
 
 <div>
-    <h4>PartnerDto</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -55,9 +53,15 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("To product list", "ProductList", "Product", null, null);
+    @Html.ActionLink("Список товаров", "ProductList", "Product", null, null)
 </p>
 <p>
-    @Html.ActionLink("Orders list", "OrdersList", "Order", new { userId = partnerDto.Id }, null)
+    @if (partnerDto.Role == RoleTypes.Wholesaler)
+    {
+        @Html.ActionLink("Управление заказами", "GetAllOrders", "Order")
+    }
+    else
+    {
+        @Html.ActionLink("Управление поставками", "OrdersList", "Order", new { userId = partnerDto.Id }, null)
+    }
 </p>
-@Model.Id

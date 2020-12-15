@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Data.Entity;
 using kursovay.Models;
 
 namespace kursovay.DAO
@@ -22,6 +23,11 @@ namespace kursovay.DAO
             int? wareHouseId = order.Products.ToArray()[0].id_warehouse;
             history.id_warehouse = wareHouseId;
             return history;
+        }
+
+        public List<Shipp_history> GetHistories(int orderId)
+        {
+            return db.Shipp_history.Where(h => h.id_order == orderId).Include(h => h.Warehouses).ToList();
         }
     }
 }

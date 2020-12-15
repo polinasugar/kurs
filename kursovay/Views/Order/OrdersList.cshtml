@@ -6,7 +6,7 @@
         string login = Session["login"].ToString();
 }
 
-<h2>OrdersList</h2>
+<h2>Заказы</h2>
 
 <div>
     @foreach(OrderDto item in Model)
@@ -17,16 +17,19 @@
                     <label>ID заказа</label>
                 </th>
                 <th>
-                    <label>Дата отправки</label>
+                    <label>Дата получения на склад</label>
                 </th>
                 <th>
-                    <label>Дата получения</label>
+                    <label>Дата отправки</label>
                 </th>
                 <th>
                     <label>Назвние текущего склада</label>
                 </th>
                 <th>
                     <label>Список продуктов</label>
+                </th>
+                <th>
+                    <label>Показать историю заказа</label>
                 </th>
             </tr>
             <tr>
@@ -51,6 +54,9 @@
                     </ul>
                 </td>
                 <td>
+                    @Html.ActionLink("Показать историю", "HistoryList", new { orderId = item.OrderId })
+                </td>
+                <td>
                     @if (partner.Role == RoleTypes.Supplier)
                     {
                         using (Html.BeginForm("AcceptOrder", "Order", new { orderId = item.OrderId }))
@@ -71,5 +77,5 @@
     }
 </div>
 <div>
-    @Html.ActionLink("My page", "PrivatePage", "User", new { login = login }, null)
+    @Html.ActionLink("Личная страница", "PrivatePage", "User", new { login = login }, null)
 </div>

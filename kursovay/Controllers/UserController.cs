@@ -32,6 +32,12 @@ namespace kursovay.Controllers
             return View();
         }
 
+        public ActionResult LogOut()
+        {
+            Session["session"] = null;
+            return RedirectToAction("LoginForm");
+        }
+
         [HttpPost]
         public ActionResult RegistrationForm(RegistrationDTO newUser)
         {
@@ -44,7 +50,6 @@ namespace kursovay.Controllers
         //Для авторизации
         public ActionResult LoginForm()
         {
-            ViewData["test"] = "test";
             return View();
         }
 

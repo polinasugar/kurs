@@ -16,6 +16,11 @@ namespace kursovay.DAO
             return orders; 
         }
 
+        public List<Orders> GetAllOrder()
+        {
+            return db.Orders.ToList();
+        }
+
         public void DeleteOrder(int orderId)
         {
             using(DbContextTransaction transaction = db.Database.BeginTransaction())
@@ -78,7 +83,10 @@ namespace kursovay.DAO
             foreach(Products product in order.Products)
             {
                 Warehouses warehouses = db.Warehouses.Where(w => w.id_warehouse == product.id_warehouse).First();
-                list.Add(warehouses);
+                if (!list.Contains(warehouses))
+                {
+                    list.Add(warehouses);
+                }
             }
             return list;
         }
