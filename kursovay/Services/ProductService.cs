@@ -31,11 +31,45 @@ namespace kursovay.Services
             return productDtos;
         } 
 
+        public List<Product_type> GetTypes()
+        {
+            return db.Product_type.ToList();
+        }
+
+        public void AddWarehouse(Warehouses warehouse)
+        {
+            db.Warehouses.Add(warehouse);
+            db.SaveChanges();
+        }
+
+        public void DeleteProduct(int productId)
+        {
+            productManager.DeleteProduct(productId);
+        }
+
         public List<OrderDto> GetAllOrders()
         {
             List<Orders> orders = orderManager.GetAllOrder();
             List<OrderDto> ordersDto = mapper.GetOrdersDto(orders);
             return ordersDto;
+        }
+
+        public void AddProduct(Products products)
+        {
+            db.Products.Add(products);
+            db.SaveChanges();
+        }
+
+        public List<ProductDto> GetProductsInBag(List<int> ids)
+        {
+            List<ProductDto> products = new List<ProductDto>();
+            foreach(int id in ids)
+            {
+                Products product = productManager.GetProductById(id);
+                ProductDto productDto = mapper.ProductToProductDto(product);
+                products.Add(productDto);
+            }
+            return products;
         }
 
         public void MakeOrder(PartnerDto partnerDto)
@@ -50,13 +84,14 @@ namespace kursovay.Services
                     order.sending_date = DateTime.Now;
                     DateTime receivDay = DateTime.Now.AddDays(10);
                     order.recevening_date = receivDay;
-                    order.price = partnerDto.ItemsId.Count * 100;
+                    order.price = 0;
                     order = db.Orders.Add(order);
                     db.SaveChanges();
                     foreach (int id in partnerDto.ItemsId)
                     {
                         Products product = db.Products.Where(p => p.id_product == id).First();
                         order.Products.Add(product);
+                        order.price += product.weight;
                     }
                     db.SaveChanges();
                     Shipp_history history = shipHistoryManager.AddShippingHistory(order);

@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using kursovay.DTO;
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
@@ -7,6 +8,9 @@
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    @{ 
+        PartnerDto currentUser = (PartnerDto)Session["session"];
+    }
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -21,10 +25,28 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                   @if (Session["session"] != null)
-                   {
-                       @Html.ActionLink("Выйти", "LogOut", "User", null, null);
-                   }
+                    @if (currentUser != null)
+                     {
+                        <li>
+                            @Html.ActionLink("Выйти", "LogOut", "User", null, null);
+                        </li>
+                          
+                        <li>
+                            @Html.ActionLink("Моя корзина", "ShowMyBag", "Product");
+                        </li>
+                        if(currentUser.Role == RoleTypes.Wholesaler)
+                        {
+                            <li>
+                                @Html.ActionLink("Добавить новый товар", "AddProductForm", "Product");
+                            </li>
+                            <li>
+                                @Html.ActionLink("Список складов", "WarehouseList", "Warehouse");
+                            </li>
+                        }
+                <li>
+                    @Html.ActionLink("Личная страница", "PrivatePage", "User", new { login = currentUser.Login }, null)
+                </li>
+                     }
                 </ul>
             </div>
         </div>

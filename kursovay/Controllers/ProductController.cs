@@ -13,18 +13,26 @@ namespace kursovay.Controllers
     public class ProductController : Controller
     {
         private ProductService productService = new ProductService();
+        private WarehouseService warehouseService = new WarehouseService();
         public ActionResult ProductList()
         {
             List<ProductDto> productDtos = productService.GetAllProductsInDto();
             return View(productDtos);
         }
-        /*
-        [HttpPost]
-        public ActionResult ProductList(IEnumerable<ProductDto> productDtos, int userId)
+
+        public ActionResult ShowMyBag()
         {
-            productService.MakeOrder(productDtos, userId);
-            return RedirectToAction("ProductList");
-        }*/
+            PartnerDto currentPartner = (PartnerDto)Session["session"];
+            List<ProductDto> productsInBag = productService.GetProductsInBag(currentPartner.ItemsId);
+            return View("ProductBag", productsInBag);
+        }
+
+        public ActionResult RemoveItemFromBag(int itemId)
+        {
+            PartnerDto currentPartner = (PartnerDto)Session["session"];
+            currentPartner.ItemsId.Remove(itemId);
+            return RedirectToAction("ShowMyBag");
+        }
 
         public ActionResult AddItemInOrder(int itemId)
         {
@@ -33,7 +41,26 @@ namespace kursovay.Controllers
             return RedirectToAction("ProductList");
         }
 
-    
+        public ActionResult AddProductForm()
+        {
+            List<Warehouses> warehouses = warehouseService.GetList();
+            List<Product_type> types = productService.GetTypes();
+            ViewData["warehouses"] = new SelectList(warehouses, "id_warehouse", "title");
+            ViewData["types"] = new SelectList(types, "id_product_type", "title");
+            return View("AddProduct");
+        }
+
+        public ActionResult DeleteProduct(int productId)
+        {
+            productService.DeleteProduct(productId);
+            return RedirectToAction("ProductList");
+        }
+
+        public ActionResult Addproduct(Products products)
+        {
+            productService.AddProduct(products);
+            return RedirectToAction("ProductList");
+        }
 
         public ActionResult MakeOrder()
         {

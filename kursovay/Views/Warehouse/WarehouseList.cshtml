@@ -1,0 +1,34 @@
+﻿@model IEnumerable<kursovay.Models.Warehouses>
+
+@{
+    ViewBag.Title = "WarehouseList";
+}
+
+<h2>Склады</h2>
+
+<p>
+    @Html.ActionLink("Добавить", "AddWarehouseForm")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.Label("ID")
+        </th>
+        <th>
+            @Html.Label("Название")
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.id_warehouse)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.title)
+        </td>
+    </tr>
+}
+
+</table>

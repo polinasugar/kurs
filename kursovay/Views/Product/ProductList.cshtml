@@ -12,16 +12,16 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Title)
+            @Html.Label("Название")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Weight)
+            @Html.Label("Цена")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.ProductType)
+            @Html.Label("Тип продукции")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.WarehouseTitle)
+            @Html.Label("Название склада")
         </th>
         <th></th>
     </tr>
@@ -51,10 +51,16 @@
                         }
                         else
                         {
-                            <input type="submit" value="Добавить продукт в заказ" />
+                            <input type="submit" value="Добавить продукт в корзину" />
                         }
                     }
                 </td>
+               <td>
+                   @if(currentUser.Role == RoleTypes.Wholesaler)
+                   {
+                       @Html.ActionLink("Убрать продукт со склада", "DeleteProduct", "Product", new { productId = item.Id}, null)
+                   }
+               </td>
             </tr>
     }
     </table>
@@ -63,7 +69,4 @@
     {
         <input type="submit" value="Сделать заказ"/>
     }
-</div>
-<div>
-    @Html.ActionLink("Личная страница", "PrivatePage", "User", new { login = login}, null)
 </div>

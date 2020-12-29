@@ -56,6 +56,7 @@ namespace kursovay.Controllers
         public ActionResult PrivatePage(string login)
         {
             PartnerDto partnerDto = userSerivice.LogIn(login);
+            Session["session"] = partnerDto;
             return View(partnerDto);
         }
 

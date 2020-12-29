@@ -24,6 +24,13 @@ namespace kursovay.DAO
             return db.Products.Where(p => p.id_product == id).First();
         }
 
+        public void DeleteProduct(int productId)
+        {
+            Products product = db.Products.Where(p => p.id_product == productId).First();
+            db.Products.Remove(product);
+            db.SaveChanges();
+        }
+
         public Orders AddOrder(int userId, int itemsCount)
         {
             using(DbContextTransaction transaction = db.Database.BeginTransaction())

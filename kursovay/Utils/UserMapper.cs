@@ -18,7 +18,8 @@ namespace kursovay.Utils
                 SecondName = partner.second_name,
                 MiddleName = partner.middle_name,
                 Telephone = partner.telephone,
-                Address = partner.address
+                Address = partner.address,
+                Login = partner.login
             };
             if(partner.Roles.title == RoleTypes.Supplier.ToString())
             {

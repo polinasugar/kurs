@@ -131,6 +131,7 @@
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Controllers\WarehouseController.cs" />
     <Compile Include="DAO\OrderManager.cs" />
     <Compile Include="DAO\PartnersDAO.cs" />
     <Compile Include="DAO\ProductManager.cs" />
@@ -206,6 +207,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ProductService.cs" />
     <Compile Include="Services\UserService.cs" />
+    <Compile Include="Services\WarehouseService.cs" />
     <Compile Include="Utils\Cryptographer.cs" />
     <Compile Include="Utils\Mapper.cs" />
     <Compile Include="Utils\HistoryMapper.cs" />
@@ -285,6 +287,10 @@
     <Content Include="Views\Order\OrdersList.cshtml" />
     <Content Include="Views\Order\List.cshtml" />
     <Content Include="Views\Order\HistoryList.cshtml" />
+    <Content Include="Views\Product\ProductBag.cshtml" />
+    <Content Include="Views\Warehouse\AddWarehouse.cshtml" />
+    <Content Include="Views\Warehouse\WarehouseList.cshtml" />
+    <Content Include="Views\Product\AddProduct.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

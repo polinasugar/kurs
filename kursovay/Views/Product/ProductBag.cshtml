@@ -1,0 +1,56 @@
+﻿@model IEnumerable<kursovay.DTO.ProductDto>
+
+@{
+    ViewBag.Title = "ProductBag";
+}
+
+<h2>Ваша корзина</h2>
+
+
+@if (Model.Count() > 0)
+{
+    <table class="table">
+        <tr>
+            <th>
+                @Html.Label("Название")
+            </th>
+            <th>
+                @Html.Label("Цена")
+            </th>
+            <th>
+                @Html.Label("Тип продукта")
+            </th>
+            <th>
+                @Html.Label("Название склада")
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Weight)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProductType)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.WarehouseTitle)
+                </td>
+                <td>
+                    @Html.ActionLink("Убрать из корзины", "RemoveItemFromBag", new { id = item.Id })
+                </td>
+            </tr>
+        }
+
+    </table>
+}
+else
+{
+    <h1>Ваша корзина пока пуста:(</h1>
+}
+
